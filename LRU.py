@@ -139,26 +139,46 @@ class LRU():
 
 
 
-c = LRU(10)
+# c = LRU(10)
 
-c.load("first")
-c.load("second")
-c.load("third")
-c.load("fourth")
-c.load("fifth")
-c.load("sixth")
-c.load("seventh")
-c.load("eighth")
-c.load("ninth")
-c.load("tenth")
-c.cache.printLL()
+# c.load("first")
+# c.load("second")
+# c.load("third")
+# c.load("fourth")
+# c.load("fifth")
+# c.load("sixth")
+# c.load("seventh")
+# c.load("eighth")
+# c.load("ninth")
+# c.load("tenth")
+# c.cache.printLL()
 
-c.use("seventh")
-c.cache.printLL()
+# c.use("seventh")
+# c.cache.printLL()
 
-c.load("fifth")
-c.cache.printLL()
+# c.load("fifth")
+# c.cache.printLL()
 
-c.load("eleventh")
-c.cache.printLL()
-# c.get_hash()
+# c.load("eleventh")
+# c.cache.printLL()
+# # c.get_hash()
+
+   
+basket = LRU(6)
+basket.load("apple")
+basket.load("banana")
+basket.load("pineapple")
+basket.load("dragon fruit")
+basket.load("mango")
+basket.load("watermelon")
+
+basket.cache.printLL()
+
+basket.use("mango")
+
+basket.cache.printLL()
+
+basket.load("kiwi")
+basket.load("cherry")
+
+basket.cache.printLL()
