@@ -182,3 +182,6 @@ basket.load("kiwi")
 basket.load("cherry")
 
 basket.cache.printLL()
+basket.load("dragon fruit")
+
+basket.cache.printLL()
