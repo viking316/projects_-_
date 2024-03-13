@@ -4,7 +4,7 @@ class Node():
   def __init__(self,data):
     self.data = data
     self.prev = None
-    self.next = None
+    self.next = None  
 
 class DLL():
   def __init__(self ):
@@ -63,7 +63,7 @@ class DLL():
     print("\n ---------------------------------- \n")
 
 class LRU():
-  
+
   def __init__(self,n):
     self.size = 0
     self.limit = n
@@ -71,21 +71,34 @@ class LRU():
     self.cache = DLL()
     self.hashh = defaultdict(str)
 
+    self.ops = 0
+    self.hits = 0
+    self.miss = 0
+
   def unload(self):
     d = self.cache.delete()
     self.hashh.pop(d)
+  
 
   def load(self,data):
+    
     if data in self.hashh.keys():
+
       print("key already exists")
+
+      self.hits+=1
       ans = input("do you want to use it? [y/n]")
+
       if ans == "y" or ans == "Y":
         self.use(data)
 
       else:
+        self.ops+=1
         pass
 
     elif self.size == self.limit:
+      
+      self.ops+=1
       print("cache size limit reached, deleting least used cache")
       self.unload()
 
@@ -95,6 +108,8 @@ class LRU():
       print(f"loaded {data} ")
 
     else:
+        self.miss+=1
+        self.ops+=1
         v,add = self.cache.append(data)
         self.hashh[v] = add
         self.size=self.size+ 1
@@ -104,14 +119,19 @@ class LRU():
     return self.hashh[data] 
   
   def use(self,data):
+    
 
     if data in self.hashh:
+
       curr = self.fetch(data)
 
       if curr == self.cache.head:
+        
         print("used head")
+        self.ops+=1
 
       elif curr == self.cache.tail:
+
         print("used tail")
 
         self.tail = curr.prev
@@ -120,14 +140,17 @@ class LRU():
         curr.prev.next = None
         curr.prev = None
         self.cache.head = curr
+        self.ops+=1
       
       else:
+
         print(f"using {data}")
         curr.next.prev = curr.prev
         curr.prev.next = curr.next
         self.cache.head.prev = curr
         curr.next = self.cache.head
         self.cache.head = curr
+        self.ops+=1
      
     
     else:
@@ -162,8 +185,7 @@ class LRU():
 # c.load("eleventh")
 # c.cache.printLL()
 # # c.get_hash()
-
-   
+    
 basket = LRU(6)
 basket.load("apple")
 basket.load("banana")
@@ -171,17 +193,23 @@ basket.load("pineapple")
 basket.load("dragon fruit")
 basket.load("mango")
 basket.load("watermelon")
+print(basket.ops)
 
 basket.cache.printLL()
 
-basket.use("mango")
+# basket.use("mango")
 
 basket.cache.printLL()
 
 basket.load("kiwi")
 basket.load("cherry")
-
+print(basket.ops)
 basket.cache.printLL()
+
 basket.load("dragon fruit")
 
 basket.cache.printLL()
+print(basket.ops)
+print(basket.miss)
+print(basket.hits)
+
